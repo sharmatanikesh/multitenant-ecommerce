@@ -13,7 +13,7 @@ export const Categories=({data}:CategoriesProps)=>{
 
             <div className="flex flex-nowrap items-center">
            
-           {data.docs.map((category:Category)=>(
+           {data.map((category:Category)=>(
             <div key={category.id}>
                 <CategoryDropdown category={category}
                 isActive={false}
