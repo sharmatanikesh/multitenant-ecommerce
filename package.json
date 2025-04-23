@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:fresh":"payload migrate:fresh"
   },
   "dependencies": {
     "@payloadcms/db-mongodb": "^3.35.1",
