@@ -40,9 +40,6 @@ export default async function Layout({
     })),
   }));
 
-  console.log("INTIAL DATA"+JSON.stringify(data,null, 2))
-  console.log("FORMATTED DATA"+JSON.stringify(formattedData,null, 2))
-
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
