@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
+import { TRPCReactProvider } from "@/trpc/client";
 
 
 const dmSanes = DM_Sans({
@@ -24,7 +25,9 @@ export default function RootLayout({
       suppressHydrationWarning
         className={`${dmSanes.className}} antialiased`}
       >
+        <TRPCReactProvider>
         {children}
+        </TRPCReactProvider>
       </body>
     </html>
   );
