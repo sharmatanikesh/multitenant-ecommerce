@@ -4,23 +4,20 @@ import { useState } from "react";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { CustomCategory } from "../types";
 import { CategoriesSidebar } from "./categories-sidebar";
 
 
 
 interface Props {
   disable?: boolean;
-  data: CustomCategory[];
 }
 
-export const SearchInput = ({ disable, data }: Props) => {
+export const SearchInput = ({ disable }: Props) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
     <div className="flex items-center gap-2 w-full">
       <CategoriesSidebar
-        data={data}
         open={isSidebarOpen}
         onOpenChange={setIsSidebarOpen}
       />
