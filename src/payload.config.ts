@@ -7,10 +7,10 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
-import Media  from './collections/Media'
-import  Categories  from './collections/Categories'
-import  Users  from './collections/Users'
-import Products  from './collections/Products'
+import { Media } from './collections/Media'
+import { Categories } from './collections/Categories'
+import { Users } from './collections/Users'
+import { Products } from './collections/Products'
 
 
 
