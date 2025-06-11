@@ -1,9 +1,21 @@
 "use client";
-import { generateTenantURL } from "@/lib/utils";
 import { useTRPC } from "@/trpc/client"
 import { useSuspenseQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+
+import { generateTenantURL } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+
+const CheckoutButton = dynamic(
+    () => import("@/modules/checkout/ui/components/checkout-button").then((mod) => mod.CheckoutButton),
+    {
+        ssr: false,
+        loading:()=>(<Button disabled className="flex-1 bg-white">ShoppingCartIcon</Button>)
+    }
+
+)
 
 interface Props{
     slug: string;
@@ -27,6 +39,7 @@ export const NavBar = ({slug}:Props) => {
                         />}
                     <p className="text-xl ">{data.name} </p>
                 </Link>
+                <CheckoutButton hideIfEmpty tenantSlug={slug} />
             </div>
        </nav>
     )
@@ -36,7 +49,8 @@ export const NavBarSkeleton = () => {
     return (
          <nav className="h-20 border-b font-medium bg-white">
             <div className="max-w-(--breakpoint) mx-auto flex justify-between items-center h-full px-4 lg:px-12">
-                <div/>
+                <div />
+                <Button disabled className="flex-1 bg-white">ShoppingCartIcon</Button>
             </div>
        </nav>
     )
