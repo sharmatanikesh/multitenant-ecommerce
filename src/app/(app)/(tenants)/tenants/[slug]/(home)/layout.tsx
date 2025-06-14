@@ -1,8 +1,8 @@
 import { getQueryClient, trpc } from "@/trpc/server";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
-import { Footer } from "@/modules/tenants/ui/components/Footer";
-import { NavBar, NavBarSkeleton } from "@/modules/tenants/ui/components/NavBar";
+import { Footer } from "@/modules/tenants/ui/components/footer";
+import { NavBar, NavBarSkeleton } from "@/modules/tenants/ui/components/navbar";
 import { Suspense } from "react";
 
 interface LayoutProps { 
