@@ -14,6 +14,7 @@ import { Users } from './collections/Users'
 import { Products } from './collections/Products'
 import { Tags } from './collections/Tags'
 import { Tenants } from './collections/Tenants'
+import { Orders } from './collections/Orders'
 
 
 
@@ -27,7 +28,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Categories,Products,Tags,Tenants],
+  collections: [Users, Media, Categories,Products,Tags,Tenants,Orders],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
