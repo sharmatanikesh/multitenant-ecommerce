@@ -11,8 +11,8 @@ import { CheckoutSidebar } from "../components/checkout-sidebar";
 import { InboxIcon, LoaderIcon } from "lucide-react";
 import { useCheckoutStates } from "../../hooks/use-checkout-states";
 import { useRouter } from "next/navigation";
-import { stat } from "fs";
 import { set } from "zod";
+
 
 interface CheckoutViewProps { 
     tenantSlug: string;
@@ -47,12 +47,13 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
  
     useEffect(() => {
         if (states.success) {
+            setStates({ success: false, cancel: false });
             clearCart()
             //Todo invalidate the library
             router.push("/products");
         }
      },
-        [states.success, clearCart, router]);
+        [states.success, clearCart, router, setStates]);
 
     useEffect(() => {
         if (error?.data?.code === "NOT_FOUND") {
