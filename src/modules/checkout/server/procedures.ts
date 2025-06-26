@@ -89,6 +89,9 @@ export const checkoutRouter = createTRPCRouter({
       
     })
 
+    console.log("🔍 Creating checkout session with userId:", ctx.session.user.id);
+    console.log("📧 Customer email:", ctx.session.user.email);
+
     if (!checkout.url) {
       throw new TRPCError({code: "INTERNAL_SERVER_ERROR", message: "Checkout session creation failed"});
     }

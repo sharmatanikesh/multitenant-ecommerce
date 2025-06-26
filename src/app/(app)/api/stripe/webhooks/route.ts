@@ -37,6 +37,7 @@ export async function POST(req: Request) {
     }
 
     console.log("✅ Success:", event.id);
+    console.log("📋 Event type:", event.type);
 
     const permittedEvents: string[] = [
         "checkout.session.completed",
@@ -54,8 +55,14 @@ export async function POST(req: Request) {
                     console.log(" ❤️Checkout session completed:", data.id);
                     console.log("METADATA",data.metadata)
                     console.log("❤️Session metadata:", data.metadata);
+                    
+                    // Handle missing metadata for testing
                     if (!data.metadata?.userId) {
-                        throw new Error("User ID is required");
+                        console.log("⚠️ No userId in metadata - skipping order creation for test session");
+                        return NextResponse.json(
+                            { message: "Test session - no order created" },
+                            { status: 200 }
+                        );
                     }
 
                     const user = await payload.findByID({
@@ -105,8 +112,8 @@ export async function POST(req: Request) {
         }
     }
     
-return NextResponse.json(
-    { message: "Received" },
-    {status: 200,}
-)
+    return NextResponse.json(
+        { message: "Received" },
+        {status: 200,}
+    )
 }

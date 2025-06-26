@@ -32,9 +32,9 @@ export const baseProcedure = t.procedure.use(async({next})=>{
 
 export const protectedProcedure = baseProcedure.use(async ({ ctx, next }) => { 
   const headers = await getHeaders();
-  const sessiion = await ctx.db.auth({ headers })
+  const session = await ctx.db.auth({ headers })
   
-  if (!sessiion.user) {
+  if (!session.user) {
     throw new TRPCError({
       code: "UNAUTHORIZED",
       message: "Not authenticated",
@@ -45,8 +45,8 @@ export const protectedProcedure = baseProcedure.use(async ({ ctx, next }) => {
     ctx: {
       ...ctx,
       session: {
-        ...sessiion,
-      user: sessiion.user,
+        ...session,
+      user: session.user,
       }
     },
   })
