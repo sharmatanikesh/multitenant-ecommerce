@@ -52,9 +52,7 @@ export async function POST(req: Request) {
             switch (event.type) { 
                 case "checkout.session.completed":
                     data = event.data.object as Stripe.Checkout.Session;
-                    console.log(" ❤️Checkout session completed:", data.id);
                     console.log("METADATA",data.metadata)
-                    console.log("❤️Session metadata:", data.metadata);
                     
                     // Handle missing metadata for testing
                     if (!data.metadata?.userId) {
@@ -77,7 +75,7 @@ export async function POST(req: Request) {
                     const expandedSession = await stripe.checkout.sessions.retrieve(
                         data.id,
                         {
-                            expand: ["line_items", "line_items.data.price.product"]
+                            expand: ["line_items.data.price.product"]
                         }
                     )
 
