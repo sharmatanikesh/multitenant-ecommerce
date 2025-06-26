@@ -79,7 +79,7 @@ export async function POST(req: Request) {
                         await payload.create({
                             collection: "orders",
                             data: {
-                                stripeCheckoutSessionId: [data.id],
+                                stripeCheckoutSessionId: data.id,
                                 user: user.id,
                                 product: item.price.product.metaData.id,
                                 name:item.price.product.name

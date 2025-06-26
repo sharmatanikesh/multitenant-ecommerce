@@ -29,7 +29,7 @@ export const Orders: CollectionConfig = {
         {
             name: 'stripeCheckoutSessionId',
             type: 'text',
-            hasMany: true,
+            required: true,
         }
     ]
 }

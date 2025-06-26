@@ -252,7 +252,7 @@ export interface Order {
   name: string;
   user: string | User;
   product: string | Product;
-  stripeCheckoutSessionId?: string[] | null;
+  stripeCheckoutSessionId: string;
   updatedAt: string;
   createdAt: string;
 }

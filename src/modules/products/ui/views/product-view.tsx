@@ -80,7 +80,7 @@ export const ProductView = ({productId,tenantSlug}:ProductiewProps) => {
                                     <p className="text-base underline font-medium">{data.tenant.name}</p>
                                 </Link>
                             </div>
-                            <div className="hidden lg:fle px-6 py-4 items-center justify-center">
+                            <div className="hidden lg:flex px-6 py-4 items-center justify-center">
                                 <div className="flex items-center gap-1">
                                     <StartRating
                                         rating={3}
