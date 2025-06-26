@@ -11,7 +11,6 @@ import { CheckoutSidebar } from "../components/checkout-sidebar";
 import { InboxIcon, LoaderIcon } from "lucide-react";
 import { useCheckoutStates } from "../../hooks/use-checkout-states";
 import { useRouter } from "next/navigation";
-import { set } from "zod";
 
 
 interface CheckoutViewProps { 

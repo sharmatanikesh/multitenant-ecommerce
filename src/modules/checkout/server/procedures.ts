@@ -82,12 +82,11 @@ export const checkoutRouter = createTRPCRouter({
       line_items: lineItems,
       invoice_creation: {
         enabled: true,
-        invoice_data: {
-          metadata: {
-            userId: ctx.session.user.id,
-          }as CheckoutMetadata,
-        },
-      }
+      },
+      metadata: {
+          userId: ctx.session.user.id,
+      } as CheckoutMetadata,
+      
     })
 
     if (!checkout.url) {

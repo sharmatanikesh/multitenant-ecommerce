@@ -22,7 +22,7 @@ export async function POST(req: Request) {
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : "Unknown error";
         
-        if (error! instanceof Error) { 
+        if (error instanceof Error) { 
             console.log(error)
         }
         console.log(`❌ Error message: ${errorMessage}`);
@@ -51,7 +51,9 @@ export async function POST(req: Request) {
             switch (event.type) { 
                 case "checkout.session.completed":
                     data = event.data.object as Stripe.Checkout.Session;
-                
+                    console.log(" ❤️Checkout session completed:", data.id);
+                    console.log("METADATA",data.metadata)
+                    console.log("❤️Session metadata:", data.metadata);
                     if (!data.metadata?.userId) {
                         throw new Error("User ID is required");
                     }
@@ -68,7 +70,7 @@ export async function POST(req: Request) {
                     const expandedSession = await stripe.checkout.sessions.retrieve(
                         data.id,
                         {
-                            expand: ["line_items.data.price.product"]
+                            expand: ["line_items", "line_items.data.price.product"]
                         }
                     )
 
