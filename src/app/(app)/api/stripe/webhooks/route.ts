@@ -1,6 +1,6 @@
 import type { Stripe } from "stripe";
 import { getPayload } from "payload";
-import config from "@/payload.config";
+import config from '@payload-config'
 import { NextResponse } from "next/server";
 
 import { stripe } from "@/lib/stripe";
@@ -25,6 +25,7 @@ export async function POST(req: Request) {
         if (error! instanceof Error) { 
             console.log(error)
         }
+        console.log(`❌ Error message: ${errorMessage}`);
         return NextResponse.json(
             {
                 message:`Webhook Error: ${errorMessage}`,
@@ -35,8 +36,10 @@ export async function POST(req: Request) {
         )
     }
 
+    console.log("✅ Success:", event.id);
+
     const permittedEvents: string[] = [
-        "checkout.session.completed"
+        "checkout.session.completed",
     ]
 
     const payload = await getPayload({ config });
@@ -66,7 +69,7 @@ export async function POST(req: Request) {
                         data.id,
                         {
                             expand: ["line_items.data.price.product"]
-                        },
+                        }
                     )
 
                     if (!expandedSession.line_items?.data || !expandedSession.line_items.data.length) {
@@ -81,7 +84,7 @@ export async function POST(req: Request) {
                             data: {
                                 stripeCheckoutSessionId: data.id,
                                 user: user.id,
-                                product: item.price.product.metaData.id,
+                                product: item.price.product.metadata.id,
                                 name:item.price.product.name
                             }
                         })
@@ -98,8 +101,7 @@ export async function POST(req: Request) {
                 {status:500}
             )
         }
-
-}
+    }
     
 return NextResponse.json(
     { message: "Received" },

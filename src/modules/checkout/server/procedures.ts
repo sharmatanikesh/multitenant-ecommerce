@@ -4,7 +4,6 @@ import { z } from "zod";
 import {  Media, Tenant } from "@/payload-types";
 import { TRPCError } from "@trpc/server";
 import Stripe from "stripe";
-import { metadata } from "@payloadcms/next/layouts";
 import { CheckoutMetadata, ProductMetadata } from "../types";
 import { stripe } from "@/lib/stripe";
 
