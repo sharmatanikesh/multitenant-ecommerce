@@ -12,10 +12,12 @@ export async function POST(req: Request) {
     let event: Stripe.Event;
 
     try {
+        const sig = req.headers.get("stripe-signature") as string
+        console.log("SIG",sig)
 
         event = stripe.webhooks.constructEvent(
             await (await req.blob()).text(),
-            req.headers.get("stripe-signature") as string,
+            sig,
             process.env.STRIPE_WEBHOOK_SECRET as string
         );
         
@@ -38,6 +40,7 @@ export async function POST(req: Request) {
 
     console.log("✅ Success:", event.id);
     console.log("📋 Event type:", event.type);
+    console.log("🔍 Event data:", JSON.stringify(event.data, null, 2));
 
     const permittedEvents: string[] = [
         "checkout.session.completed",
@@ -56,10 +59,10 @@ export async function POST(req: Request) {
                     
                     // Handle missing metadata for testing
                     if (!data.metadata?.userId) {
-                        console.log("⚠️ No userId in metadata - skipping order creation for test session");
+                        console.log("⚠️ No userId in metadata");
                         return NextResponse.json(
-                            { message: "Test session - no order created" },
-                            { status: 200 }
+                            { message: " no order created" },
+                            { status: 400 }
                         );
                     }
 
