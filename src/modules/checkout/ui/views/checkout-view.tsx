@@ -3,7 +3,7 @@
 import { useTRPC } from "@/trpc/client";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useCart } from "../../hooks/use-cart";
-import { use, useEffect } from "react";
+import { useEffect } from "react";
 import { toast } from "sonner";
 import { generateTenantURL } from "@/lib/utils";
 import { CheckoutItem } from "../components/checkout-item";
@@ -22,7 +22,7 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
 
     const [states, setStates] = useCheckoutStates();
 
-    const { productIds,clearAllCarts,removeProduct,clearCart } = useCart(tenantSlug);
+    const { productIds,removeProduct,clearCart } = useCart(tenantSlug);
     const trpc = useTRPC();
     const { data,error ,isLoading} = useQuery(trpc.checkout.getProducts.queryOptions({
         ids:productIds
@@ -45,6 +45,7 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
     }))
  
     useEffect(() => {
+        console.log("TRIGGERED")
         if (states.success) {
             setStates({ success: false, cancel: false });
             clearCart()
@@ -59,7 +60,7 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
             clearCart();
             toast.warning("Invalid products found, cart cleared");
         }
-    }, [error, clearAllCarts]);
+    }, [error,clearCart]);
 
     if (isLoading) {
         return (
