@@ -21,7 +21,6 @@ export const StarPicker =({
     const [hovervalue,setHoverValue] = useState(0);
 
     const handleChange =(value:number)=>{
-        console.log(value)
         onChange?.(value)
     }
 
