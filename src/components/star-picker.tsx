@@ -12,7 +12,7 @@ interface StartPickerProps{
 
 }
 
-export const StartPicker =({
+export const StarPicker =({
     value=0,
     onChange,
     disabled,
@@ -26,8 +26,8 @@ export const StartPicker =({
     }
 
     return (
-        <div className={cn("flex items-center",disabled && "opacity cursor-not-allowed",className)}>
-            {[1,2,3,4.5].map((star)=>(
+        <div className={cn("flex items-center",disabled && "opacity-50 cursor-not-allowed",className)}>
+            {[1,2,3,4,5].map((star)=>(
                 <button key={star}
                 type="button"
                 disabled={disabled}
@@ -37,7 +37,7 @@ export const StartPicker =({
                 onMouseLeave={()=>setHoverValue(0)}
                 >
                     <StarIcon
-                    className={cn("size-5",(hovervalue || value)>=star?"fill-back stroke-black":"stroke-black")}
+                    className={cn("size-5",(hovervalue || value)>=star?"fill-black stroke-black":"stroke-black")}
                     />
                 </button>
             ))}

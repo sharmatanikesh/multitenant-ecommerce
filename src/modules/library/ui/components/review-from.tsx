@@ -11,7 +11,7 @@ import { Button} from "@/components/ui/button"
 
 import { ReviewsGetOneOutput } from "@/modules/reviews/types"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
-import { StartPicker } from "@/components/star-picker"
+import { StarPicker } from "@/components/star-picker"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 
@@ -87,7 +87,7 @@ export const ReviewForm =({productId,initialData}:Props)=>{
                render={({field})=>(
                  <FormItem>
                      <FormControl>
-                        <StartPicker value={field.value} onChange={field.onChange} disabled={isPreview} />
+                        <StarPicker value={field.value} onChange={field.onChange} disabled={isPreview} />
                      </FormControl>
                      <FormMessage/>
                  </FormItem>
