@@ -9,13 +9,13 @@ export const reviewsRouter= createTRPCRouter({
         })
     ).query(async({ctx,input})=>{
       const product = await ctx.db.findByID({
-        collection:"reviews",
+        collection:"products",
         id:input.productId
       })
       if(!product){
         throw new TRPCError({
           code:"NOT_FOUND",
-          message:"Review not found"
+          message:"Product not found"
         })
       }
 

@@ -1,3 +1,4 @@
+"use client"
 import { useTRPC } from "@/trpc/client";
 import { ArrowLeftIcon } from "lucide-react"
 import Link from "next/link"
@@ -17,7 +18,7 @@ export const ProductView =({productId}:Props)=>{
         <div className="min-h-screen bg-white">
             <nav className="p-4 bg-[#f4f4f0] w-full border-b">
                 <Link prefetch href="/library" className="flex items-center gap-2">
-                    <ArrowLeftIcon className="size-4" />``
+                    <ArrowLeftIcon className="size-4" />
                     <span className="text font-medium">Back to Library </span>
                 </Link>
             </nav>
