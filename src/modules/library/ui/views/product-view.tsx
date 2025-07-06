@@ -1,8 +1,9 @@
+import { useTRPC } from "@/trpc/client";
 import { ArrowLeftIcon } from "lucide-react"
 import Link from "next/link"
 import { useSuspenseQuery } from "@tanstack/react-query"
-import { useTRPC } from "@/trpc/client"
 import { ReviewSidebar } from "../components/review-sidebar"
+
 
 interface Props{
     productId:string

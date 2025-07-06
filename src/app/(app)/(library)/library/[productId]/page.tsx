@@ -14,6 +14,10 @@ const Page =async ({params}:Props)=>{
         productId
     }))
 
+    void queryClient.prefetchQuery(trpc.reviews.getOne.queryOptions({
+        productId
+    }))
+
     return (
         <HydrationBoundary state={dehydrate(queryClient)}>
             <ProductView productId={productId}/>

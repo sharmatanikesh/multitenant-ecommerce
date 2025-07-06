@@ -1,3 +1,4 @@
+"use client"
 import {z} from "zod"
 import { useState } from "react"
 import {Form, useForm} from "react-hook-form"
