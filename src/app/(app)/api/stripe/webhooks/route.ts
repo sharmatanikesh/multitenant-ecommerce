@@ -13,7 +13,6 @@ export async function POST(req: Request) {
 
     try {
         const sig = req.headers.get("stripe-signature") as string
-        console.log("SIG",sig)
 
         event = stripe.webhooks.constructEvent(
             await (await req.blob()).text(),
@@ -38,12 +37,10 @@ export async function POST(req: Request) {
         )
     }
 
-    console.log("✅ Success:", event.id);
-    console.log("📋 Event type:", event.type);
-    console.log("🔍 Event data:", JSON.stringify(event.data, null, 2));
-
+  
     const permittedEvents: string[] = [
         "checkout.session.completed",
+        "account.updated"
     ]
 
     const payload = await getPayload({ config });
@@ -59,7 +56,6 @@ export async function POST(req: Request) {
                     
                     // Handle missing metadata for testing
                     if (!data.metadata?.userId) {
-                        console.log("⚠️ No userId in metadata");
                         return NextResponse.json(
                             { message: " no order created" },
                             { status: 400 }
@@ -79,6 +75,9 @@ export async function POST(req: Request) {
                         data.id,
                         {
                             expand: ["line_items.data.price.product"]
+                        },
+                        {
+                            stripeAccount:event.account
                         }
                     )
 
@@ -93,6 +92,7 @@ export async function POST(req: Request) {
                             collection: "orders",
                             data: {
                                 stripeCheckoutSessionId: data.id,
+                                stripeAccountId:event.account,
                                 user: user.id,
                                 product: item.price.product.metadata.id,
                                 name:item.price.product.name
@@ -100,6 +100,20 @@ export async function POST(req: Request) {
                         })
                     }
                     break;
+                case"account.updated":
+                        data = event.data.object as Stripe.Account;
+                        await payload.update({
+                            collection:"tenants",
+                            where:{
+                                stripeAccountId:{
+                                    equals:data.id
+                                }
+                            },
+                            data:{
+                                stripeDetailSubmitted:data.details_submitted
+                            }
+                        })
+                        break;
                 default:
                     throw new Error(`Unhandled event type: ${event.type}`);
             }
