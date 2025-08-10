@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { CheckIcon, LinkIcon, StarIcon } from "lucide-react";
 import dynamic from "next/dynamic";
+import {RichText} from "@payloadcms/richtext-lexical/react"
 
 import { StartRating } from "@/components/start-rating";
 import { formatCurrency, generateTenantURL } from "@/lib/utils";
@@ -17,31 +18,31 @@ const CartButton = dynamic(
     () => import("../components/cart-button").then((mod) => mod.CartButton),
     {
         ssr: false,
-        loading:()=><Button disabled className="flex-1 bg-pink-400">Add to cart</Button>
+        loading: () => <Button disabled className="flex-1 bg-pink-400">Add to cart</Button>
     }
 
 )
 
-interface ProductiewProps{
+interface ProductiewProps {
     tenantSlug: string;
     productId: string;
 
 }
 
-export const ProductView = ({productId,tenantSlug}:ProductiewProps) => {
-    
+export const ProductView = ({ productId, tenantSlug }: ProductiewProps) => {
+
     const trpc = useTRPC();
-    const {data} = useSuspenseQuery(trpc.products.getOne.queryOptions({
+    const { data } = useSuspenseQuery(trpc.products.getOne.queryOptions({
         id: productId,
     }));
 
-    const [isCopied,setIsCopied] = useState(false);
+    const [isCopied, setIsCopied] = useState(false);
     return (
         <div className="px-4 lg:px-12 py-10">
             <div className="border rounded-sm bg-white overflow-hidden">
                 <div className="relative aspect-[3.9] border-b">
                     <Image
-                        src={data.image?.url ||"/placeholder.png"}
+                        src={data.image?.url || "/placeholder.png"}
                         alt={data.name}
                         fill
                         className="object-cover "
@@ -81,7 +82,7 @@ export const ProductView = ({productId,tenantSlug}:ProductiewProps) => {
                                 <div className="flex items-center gap-2">
                                     <StartRating
                                         rating={data.reviewRating}
-                                    iconClassName="size-4"/>
+                                        iconClassName="size-4" />
                                     <p className="text-base font-medium"> {data.reviewCount} ratings</p>
                                 </div>
                             </div>
@@ -89,21 +90,21 @@ export const ProductView = ({productId,tenantSlug}:ProductiewProps) => {
 
                         <div className="block lg:hidden px-6 py-4 items-center justify-center border-b">
                             <div className="flex items-center gap-2">
-                               
+
                                 <StartRating
                                     rating={data.reviewRating}
                                     iconClassName="size-4"
                                 />
                                 <p className="text-base font-medium"> {data.reviewCount} ratings</p>
-                                </div>
+                            </div>
                         </div>
 
                         <div className="p-6">
                             {
                                 data.description ? (
-                                    <p>{data.description}</p>
+                                    <RichText data={data.description}/>
                                 ) : (<p className="font-medium text-muted-foreground italic"> No description provided</p>)
-                            
+
                             }
                         </div>
 
@@ -121,13 +122,13 @@ export const ProductView = ({productId,tenantSlug}:ProductiewProps) => {
                                             setIsCopied(true);
                                             navigator.clipboard.writeText(window.location.href)
                                             toast.success("URL copied to clipboard")
-                                            setTimeout(()=>{
+                                            setTimeout(() => {
                                                 setIsCopied(false);
-                                            },1000)
+                                            }, 1000)
                                         }}
                                         disabled={isCopied}
                                     >
-                                        {isCopied ?<CheckIcon/>:<LinkIcon/>}
+                                        {isCopied ? <CheckIcon /> : <LinkIcon />}
                                     </Button>
                                 </div>
 
@@ -169,6 +170,23 @@ export const ProductView = ({productId,tenantSlug}:ProductiewProps) => {
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export const ProductViewSkelton = () => {
+    return (
+        <div className="px-4 lg:px-12 py-10">
+            <div className="border rounded-sm bg-white overflow-hidden">
+                <div className="relative aspect-[3.9] border-b">
+                    <Image
+                        src={"/placeholder.png"}
+                        alt={"Placeholder"}
+                        fill
+                        className="object-cover"
+                    />
                 </div>
             </div>
         </div>

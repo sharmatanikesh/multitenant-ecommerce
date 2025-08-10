@@ -14,8 +14,8 @@ export const Products: CollectionConfig={
             const tenant = req.user?.tenants?.[0]?.tenant as Tenant
             return Boolean(tenant?.stripeDetailSubmitted)
 
-        }
-  
+        },
+        delete :({req})=> isSuperAdmin(req.user),
     },
     admin:{
         useAsTitle:"name",
@@ -29,7 +29,7 @@ export const Products: CollectionConfig={
         },
         {
             name:"description",
-            type:"text",
+            type:"richText",
            
         },
         {
@@ -41,7 +41,7 @@ export const Products: CollectionConfig={
            }
         },
         {
-            name:"category",
+            name:"category", 
             type:"relationship", 
             relationTo:"categories",
             hasMany:false,
@@ -65,10 +65,28 @@ export const Products: CollectionConfig={
         },
         {
             name:"content",
-            type:"textarea",
+            type:"richText",
             admin:{
                 description:"Protected content only visible to the tenan. Add product downloadatble files, getting strarted guides and bonus mateeial"
             }
-        }
+        },
+        {
+            name:"isArchived",
+            label:"Archive",
+            defaultValue:false,
+            type:"checkbox",
+            admin:{
+                description:"Check if you want to hide this product"
+            }
+        },
+        {
+            name:"isPrivate",
+            label:"Private",
+            defaultValue:false,
+            type:"checkbox",
+            admin:{
+                description:"If checked, this product will not be shown on the public storefront."
+            }
+        } 
     ]
 }

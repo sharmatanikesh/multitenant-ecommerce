@@ -81,6 +81,11 @@ export const checkoutRouter = createTRPCRouter({
             "tenant.slug": {
               equals: input.tenantSlug
             }
+          },
+          {
+            isArchived: {
+              not_equals: true
+            }
           }
         ]
       }
@@ -175,9 +180,19 @@ export const checkoutRouter = createTRPCRouter({
         collection: "products",
         depth: 2,
         where: {
-          id: {
+          and:[
+            {
+               id: {
             in:input.ids,
           }
+            },
+            {
+              isArchived:{
+                not_equals: true
+              }
+            }
+          ]
+         
         }
       })   
       
