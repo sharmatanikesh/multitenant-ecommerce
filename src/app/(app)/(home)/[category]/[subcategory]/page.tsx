@@ -13,6 +13,7 @@ import { DEFAULT_LIMIT } from "@/constants";
     }>,
      searchParams:Promise<SearchParams>
  }
+ export const dynamic = "force-dynamic";
  
  const Page =async  ({ params,searchParams}:Props )=>{
       

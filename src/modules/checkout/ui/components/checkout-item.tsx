@@ -25,6 +25,7 @@ export const CheckoutItem = ({
     price,
     onRemove
 }: CheckoutItemProps) => {
+    console.log(id);
     return (
         <div className={cn("grid grid-cols-[8.5rem_1fr_auto] gap-4 border-b pr-4",
             isLast&&"border-b-0"
